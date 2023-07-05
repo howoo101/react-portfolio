@@ -1,0 +1,217 @@
+#accessory {
+	width: 100%;
+	background: #fff;
+	padding: 50px 0 60px;
+
+	h1 {
+		font: bold 22px/1 'arial';
+		margin-bottom: 60px;
+		text-align: center;
+		color: #444;
+		span {
+			color: #777;
+		}
+	}
+
+	.inner {
+		width: 1180px;
+		margin: 0 auto;
+		position: relative;
+
+		.store {
+			display: block;
+			width: 150px;
+			margin: 0 auto;
+			font: bold 16px/1 'arial';
+			color: #555;
+		}
+
+		.tab_buttons {
+			width: 100%;
+			&::after {
+				content: '';
+				display: block;
+				clear: both;
+			}
+
+			li {
+				width: calc(100% / 3);
+				height: 60px;
+				float: left;
+				background: #333;
+				font: bold 18px/60px 'arial';
+				color: #ccc;
+				text-align: center;
+				cursor: pointer;
+
+				&.on {
+					background: dodgerblue;
+					color: #fff;
+				}
+			}
+		}
+
+		.wrap {
+			width: 100%;
+			margin-bottom: 60px;
+			.tab_items {
+				width: 100%;
+				display: none;
+				article {
+					float: left;
+					width: 590px;
+					height: 300px;
+					border: 1px solid #fff;
+					background: #888;
+					position: relative;
+
+					.pic {
+						width: 200px;
+						height: 100%;
+						position: absolute;
+						top: 50%;
+						left: 0;
+						transform: translateY(-40%);
+						text-align: center;
+						img {
+							width: 80%;
+							height: 80%;
+						}
+					}
+
+					.con {
+						width: 300px;
+						margin-left: 220px;
+						position: relative;
+						top: 50%;
+						transform: translateY(-50%);
+
+						h2 {
+							font: bold 18px/1 'arial';
+							margin-bottom: 10px;
+						}
+
+						p {
+							font: bold 18px/1 'arial';
+						}
+					}
+
+					.more {
+						width: 50px;
+						height: 50px;
+						line-height: 50px;
+						position: absolute;
+						bottom: 0;
+						right: 0;
+						text-align: center;
+						background: blue;
+						color: #fff;
+						border-radius: 30px;
+					}
+				}
+
+				&.on {
+					display: block;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $tablet) {
+	#accessory {
+		.inner {
+			width: 100%;
+			.tab_buttons {
+				li {
+					height: 55px;
+				}
+			}
+
+			.wrap {
+				width: 100%;
+				margin-bottom: 60px;
+				.tab_items {
+					width: 100%;
+					article {
+						float: left;
+						width: 50%;
+						height: 200px;
+
+						.pic {
+							width: 120px;
+							height: 100%;
+
+							img {
+								width: 80%;
+								height: 80%;
+							}
+						}
+
+						.con {
+							width: 160px;
+							margin-left: 140px;
+							h2 {
+								font: bold 18px/1 'arial';
+								margin-bottom: 10px;
+							}
+
+							p {
+								font: bold 18px/1 'arial';
+							}
+						}
+
+						.more {
+							width: 50px;
+							height: 50px;
+							line-height: 50px;
+							position: absolute;
+							bottom: 0;
+							right: 0;
+							text-align: center;
+							background: blue;
+							color: #fff;
+							border-radius: 30px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $mobile) {
+	#accessory {
+		.inner {
+			width: 100%;
+
+			.wrap {
+				width: 100%;
+				margin-bottom: 60px;
+				.tab_items {
+					width: 100%;
+					article {
+						width: 100%;
+						height: 200px;
+						margin-bottom: 10px;
+
+						.pic {
+							width: 200px;
+							height: 100%;
+
+							img {
+								width: 80%;
+								height: 80%;
+							}
+						}
+
+						.con {
+							width: 300px;
+							margin-left: 220px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
