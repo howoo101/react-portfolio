@@ -6,7 +6,7 @@
 		height: 200px;
 		background: gray;
 	}
-	.inner {
+	> .inner {
 		padding: 150px 10vw 100px;
 		min-height: 800px;
 
@@ -28,7 +28,7 @@
 
 @media screen and (max-width: $tablet) {
 	.content {
-		.inner {
+		> .inner {
 			padding: 100px 10vw 80px;
 
 			h1 {
@@ -40,7 +40,7 @@
 
 @media screen and (max-width: $mobile) {
 	.content {
-		.inner {
+		> .inner {
 			padding: 80px 40px 60px;
 
 			h1 {

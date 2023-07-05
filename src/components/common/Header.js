@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+<i class='fa-solid fa-magnifying-glass'></i>;
 
 function Header({ type }) {
 	const active = 'on';
@@ -41,6 +42,9 @@ function Header({ type }) {
 						</li>
 						<li>
 							<NavLink to='#'>FIND A DESTINATION </NavLink>
+							<NavLink to='#'>
+								<FontAwesomeIcon icon={faMagnifyingGlass} />{' '}
+							</NavLink>
 						</li>
 						<li>
 							<FontAwesomeIcon className='btnCall' icon={faBars} />
