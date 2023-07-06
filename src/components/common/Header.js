@@ -9,7 +9,7 @@ function Header({ type }) {
 		<header id='header' className={type}>
 			<div className='wrap'>
 				<h1>
-					<Link to='index'>LOGO</Link>
+					<Link to='/'>LOGO</Link>
 				</h1>
 				<nav>
 					<ul id='gnb' className='clearfix'>
