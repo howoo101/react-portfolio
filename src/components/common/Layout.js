@@ -12,6 +12,7 @@ function Layout({ name, children }) {
 			<figure className='subVisual'></figure>
 			<div className='inner'>
 				<h1>{name}</h1>
+				{children}
 			</div>
 		</section>
 	);
