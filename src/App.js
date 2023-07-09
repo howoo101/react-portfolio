@@ -2,6 +2,7 @@ import { Route, Switch } from 'react-router-dom';
 import './scss/style.scss';
 
 // common
+import Main from './components/common/Main';
 import Header from './components/common/Header';
 import Footer from './components/common/Footer';
 
@@ -17,20 +18,17 @@ function App() {
 	return (
 		<>
 			<Switch>
-				<Route exact path='/'>
-					<Header type={'main'} />
-				</Route>
-				<Route path='/'>
-					{/* 서브전용 라우터에는 sub문자값을 전달 */}
-					<Header type={'sub'} />
-				</Route>
+				<Route exact path='/' component={Main} />
+
+				<Route path='/' render={() => <Header type={'sub'} />} />
+				{/* 서브전용 라우터에는 sub문자값을 전달 */}
 			</Switch>
 
 			<Route path='/department' component={Department} />
 			<Route path='/gallery' component={Gallery} />
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/contact' component={Contact} />
-			<Route path='/contact' component={Community} />
+			<Route path='/community' component={Community} />
 			<Route path='/signup' component={Signup} />
 			<Footer />
 		</>

@@ -10,7 +10,7 @@ footer {
 		.copy {
 			float: left;
 			display: block;
-			width: 340px;
+			width: 360px;
 			height: 75px;
 			line-height: 75px;
 
@@ -45,35 +45,6 @@ footer {
 
 		.inner {
 			width: 100%;
-
-			.copy {
-				float: left;
-				display: block;
-				width: 340px;
-				height: 75px;
-				line-height: 75px;
-
-				span {
-					font: bold 15px/1 'arial';
-					color: #555;
-				}
-			}
-
-			.link {
-				float: right;
-				li {
-					float: left;
-					margin-right: 20px;
-					height: 75px;
-					line-height: 75px;
-					text-align: center;
-
-					a {
-						font: bold 15px/1 'arial';
-						color: #555;
-					}
-				}
-			}
 		}
 	}
 }
