@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import Layout from '../common/Layout';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Signup() {
+	const history = useHistory();
 	const initVal = useRef({
 		userid: '',
 		pwd1: '',
@@ -12,7 +14,7 @@ function Signup() {
 		edu: '',
 		comments: '',
 	});
-	const [value, setValue] = useState(initVal.current);
+	const [val, setValue] = useState(initVal.current);
 	const [Err, setErr] = useState({});
 	const [Submit, setSubmit] = useState(false);
 
@@ -20,26 +22,69 @@ function Signup() {
 	const onChangeValue = (e) => {
 		const { name, value } = e.target;
 		console.log(name, value);
-		setValue({ ...value, [name]: value });
+		setValue({ ...val, [name]: value });
 	};
 
 	const onChangeCheck = (e) => {
 		const { name } = e.target;
-		const isChecked = [...e.target.parentElement.querySelectorAll('input')].some((el) => el.checked);
-		setValue({ ...value, [name]: isChecked });
+
+		const checks = [...e.target.parentElement.querySelectorAll('input')]
+			.filter((el) => el.checked)
+			.map((el) => {
+				return el.value;
+			});
+
+		setValue({ ...val, [name]: checks });
+		console.log(val);
 	};
 
 	const onChangeRadio = (e) => {
 		const { name, checked } = e.target;
-		setValue({ ...value, [name]: checked });
+		setValue({ ...val, [name]: checked });
 	};
-	const validate = (e) => {
+	const validate = (value) => {
 		const errs = {};
+		const eng = /[a-zA-Z]/;
+		const num = /[0-9]/;
+		const spc = /[~!@#$%^&*()_+]/;
+		const regex = /(\W|^)[\w.\-]{0,25}@(naver|daum|gmail)\.com(\W|$)/;
 
+		if (value.userid.length < 5) {
+			errs.userid = '아이디를 5글자 이상 입력하세요.';
+		}
+		if (
+			value.pwd1.length < 5 ||
+			!eng.test(value.pwd1) ||
+			!num.test(value.pwd1) ||
+			!spc.test(value.pwd1)
+		) {
+			errs.pwd1 = '비밀번호는 5글자 이상, 영문, 숫자, 특수문자를 모두 포함하세요.';
+		}
+		if (value.pwd1 !== value.pwd2 || !value.pwd2) {
+			errs.pwd2 = '두개의 비밀번호를 동일하게 입력하세요.';
+		}
+		if (!regex.test(value.email)) {
+			errs.email = '올바른 이메일 형식이 아닙니다.';
+		}
+		if (value.gender === '') {
+			errs.gender = '성별을 체크해주세요.';
+		}
+		if (value.hobbys.length === 0) {
+			console.log(value.hobbys);
+			errs.hobbys = '취미를 체크해주세요.';
+		}
+
+		if (value.edu === '') {
+			errs.edu = '최종학력을 선택해주세요.';
+		}
+		if (value.comments.length < 10) {
+			errs.comments = '남기는 말을 최소 10글자 이상 입력하세요.';
+		}
 		return errs;
 	};
 	const formSubmit = (e) => {
 		e.preventDefault();
+		setErr(validate(val));
 		setSubmit(true);
 	};
 
@@ -48,8 +93,10 @@ function Signup() {
 		const len = Object.keys(Err).length;
 		if (len === 0 && Submit) {
 			alert('모든 인증을 통과했습니다.');
+			setValue(initVal);
+			history.push('/');
 		}
-	}, [Submit, Err]);
+	}, [history, Submit, Err]);
 
 	return (
 		<Layout name={'Signup'}>
@@ -67,9 +114,8 @@ function Signup() {
 										name='userid'
 										id='userid'
 										placeholder='아이디를 입력하세요.'
-										minLength='7'
-										maxLength='30'
 										onChange={onChangeValue}
+										value={val.userid || ''}
 									/>
 									<br />
 									{Err.userid && <p>{Err.userid}</p>}
@@ -86,9 +132,8 @@ function Signup() {
 										name='pwd1'
 										id='pwd1'
 										placeholder='비밀번호를 입력하세요.'
-										minLength='7'
-										maxLength='15'
 										onChange={onChangeValue}
+										value={val.pwd1 || ''}
 									/>
 									<br />
 									{Err.pwd1 && <p>{Err.pwd1}</p>}
@@ -104,9 +149,8 @@ function Signup() {
 										name='pwd2'
 										id='pwd2'
 										placeholder='비밀번호를 재 입력하세요.'
-										minLength='7'
-										maxLength='15'
 										onChange={onChangeValue}
+										value={val.pwd2 || ''}
 									/>
 									<br />
 									{Err.pwd2 && <p>{Err.pwd2}</p>}
@@ -124,6 +168,7 @@ function Signup() {
 										id='email'
 										placeholder='이메일 주소를 입력하세요.'
 										onChange={onChangeValue}
+										value={val.email || ''}
 									/>
 									<br />
 									{Err.email && <p>{Err.email}</p>}
@@ -151,10 +196,22 @@ function Signup() {
 								<th scope='row'>성별</th>
 								<td>
 									<label htmlFor='male'>Male</label>
-									<input type='radio' name='gender' id='male' value='male' onChange={onChangeRadio} />
+									<input
+										type='radio'
+										name='gender'
+										id='male'
+										value='male'
+										onChange={onChangeRadio}
+									/>
 
 									<label htmlFor='female'>Female</label>
-									<input type='radio' name='gender' id='female' value='female' onChange={onChangeRadio} />
+									<input
+										type='radio'
+										name='gender'
+										id='female'
+										value='female'
+										onChange={onChangeRadio}
+									/>
 									<br />
 									{Err.gender && <p>{Err.gender}</p>}
 								</td>
@@ -164,16 +221,40 @@ function Signup() {
 								<th scope='row'>취미</th>
 								<td>
 									<label htmlFor='sports'>Sports</label>
-									<input type='checkbox' name='hobby' id='sports' value='sports' onChange={onChangeCheck} />
+									<input
+										type='checkbox'
+										name='hobbys'
+										id='sports'
+										value='sports'
+										onChange={onChangeCheck}
+									/>
 
 									<label htmlFor='music'>Music</label>
-									<input type='checkbox' name='hobby' id='music' value='music' onChange={onChangeCheck} />
+									<input
+										type='checkbox'
+										name='hobbys'
+										id='music'
+										value='music'
+										onChange={onChangeCheck}
+									/>
 
 									<label htmlFor='game'>Game</label>
-									<input type='checkbox' name='hobby' id='game' value='game' onChange={onChangeCheck} />
+									<input
+										type='checkbox'
+										name='hobbys'
+										id='game'
+										value='game'
+										onChange={onChangeCheck}
+									/>
 
 									<label htmlFor='reading'>Reading</label>
-									<input type='checkbox' name='hobby' id='reading' value='reading' onChange={onChangeCheck} />
+									<input
+										type='checkbox'
+										name='hobbys'
+										id='reading'
+										value='reading'
+										onChange={onChangeCheck}
+									/>
 									<br />
 									{Err.hobbys && <p>{Err.hobbys}</p>}
 								</td>
@@ -200,7 +281,11 @@ function Signup() {
 
 							<tr>
 								<th colSpan='2'>
-									<input type='reset' value='리셋' onClick={() => setValue(initVal)} />
+									<input
+										type='reset'
+										value='리셋'
+										onClick={() => setValue(initVal)}
+									/>
 									<input type='submit' value='가입' />
 								</th>
 							</tr>
