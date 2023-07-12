@@ -42,12 +42,25 @@ function Community() {
 		onReset();
 	};
 
-	const deletePost = (deleteIdx) => {
+	const deletePost = (deleteId) => {
 		if (!window.confirm('해당 게시글을 삭제하겠습니까?')) return;
-
-		setPosts(posts.filter((post) => post.id !== deleteIdx));
+		setPosts(posts.filter((post) => post.id !== deleteId));
 	};
 
+	const updatePost = (updateId) => {
+		if (!title.current.value.trim() || !content.current.value.trim()) {
+			return alert('제목과 본문을 모두 입력하세요.');
+		}
+		const editPost = {
+			id: nextId.current,
+			title: inputs.title,
+			content: inputs.content,
+		};
+
+		setPosts([{ ...editPost }, ...posts]);
+
+		onReset();
+	};
 	useEffect(() => {
 		console.log(posts);
 	}, [posts, inputs]);
