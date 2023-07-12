@@ -41,7 +41,16 @@ function Community() {
 
 		onReset();
 	};
-	useEffect(() => {}, [posts, inputs]);
+
+	const deletePost = (deleteIdx) => {
+		if (!window.confirm('해당 게시글을 삭제하겠습니까?')) return;
+
+		setPosts(posts.filter((post) => post.id !== deleteIdx));
+	};
+
+	useEffect(() => {
+		console.log(posts);
+	}, [posts, inputs]);
 
 	return (
 		<Layout name={'Community'}>
@@ -73,7 +82,7 @@ function Community() {
 							</div>
 							<nav className='btnSet'>
 								<button>EDIT</button>
-								<button>DELETE</button>
+								<button onClick={() => deletePost(post.id)}>DELETE</button>
 							</nav>
 						</article>
 					);
