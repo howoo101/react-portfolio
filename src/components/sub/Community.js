@@ -1,13 +1,15 @@
 import Layout from '../common/Layout';
 import { useEffect, useRef, useState } from 'react';
+import LocalStorage from '../common/LocalStorage';
 
 function Community() {
+	const data = new LocalStorage().getLocalData('posts');
 	const nextId = useRef(1);
 	const title = useRef(null);
 	const content = useRef(null);
 
 	const [allowed, setAllowed] = useState(true);
-	const [posts, setPosts] = useState([]);
+	const [posts, setPosts] = useState(data);
 	const [inputs, setInputs] = useState({
 		title: '',
 		content: '',
@@ -83,9 +85,11 @@ function Community() {
 
 		setAllowed(true);
 	};
+
 	useEffect(() => {
 		console.log(posts);
-	}, [posts, inputs]);
+		localStorage.setItem('posts', JSON.stringify(posts));
+	}, [posts]);
 
 	return (
 		<Layout name={'Community'}>
