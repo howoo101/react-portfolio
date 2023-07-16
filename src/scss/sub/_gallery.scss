@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
 
-.gallery {
+.Gallery {
 	width: 100%;
 	overflow: hidden;
 	position: relative;
@@ -46,54 +46,49 @@
 		}
 	}
 
-	.wrap {
-		opacity: 0;
-		transform: translateY(100px);
-		transition: 1s;
+	.frame {
+		// opacity: 0;
+		// transform: translateY(100px);
+		// transition: 1s;
 
-		&.on {
-			opacity: 1;
-			transform: translateY(0px);
-		}
+		// &.on {
+		// 	opacity: 1;
+		// 	transform: translateY(0px);
+		// }
 		&::after {
 			content: '';
 			display: block;
 			clear: both;
 		}
-		li {
+		article {
 			width: calc(100% / 4);
 			float: left;
 			padding: 10px;
 
-			> div {
+			> .picture {
 				width: 100%;
 				background: #fff;
 				padding: 10px;
 				box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.05);
+			}
+			p {
+				font: 18px/1.2 'Architects daughter';
+				color: #777;
+				margin-top: 10px;
+				margin-bottom: 20px;
+			}
 
-				.picture {
-					width: 100%;
+			.profile {
+				width: 100%;
+				img {
+					width: 36px;
 				}
-
-				p {
-					font: 18px/1.2 'Architects daughter';
-					color: #777;
-					margin-top: 10px;
-					margin-bottom: 20px;
-				}
-
-				.profile {
-					width: 100%;
-					img {
-						width: 36px;
-					}
-					span {
-						display: inline-block;
-						font: 12px/1 'arial';
-						color: orange;
-						margin-left: 5px;
-						transform: translateY(-10px);
-					}
+				span {
+					display: inline-block;
+					font: 12px/1 'arial';
+					color: orange;
+					margin-left: 5px;
+					transform: translateY(-10px);
 				}
 			}
 		}
@@ -101,9 +96,9 @@
 }
 
 @media screen and (max-width: $tablet) {
-	.gallery {
-		.wrap {
-			li {
+	.Gallery {
+		.frame {
+			article {
 				width: calc(100% / 2);
 			}
 		}
@@ -111,9 +106,9 @@
 }
 
 @media screen and (max-width: $mobile) {
-	.gallery {
-		.wrap {
-			li {
+	.Gallery {
+		.frame {
+			article {
 				width: calc(100% / 1);
 			}
 		}
