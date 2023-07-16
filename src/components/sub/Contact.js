@@ -93,7 +93,11 @@ function Contact() {
 				<ul className='branch'>
 					{info.current.map((el, idx) => {
 						return (
-							<li key={idx} onClick={() => setIndex(idx)}>
+							<li
+								key={idx}
+								className={index === idx ? 'on' : ''}
+								onClick={() => setIndex(idx)}
+							>
 								{el.title}
 							</li>
 						);
