@@ -3,7 +3,11 @@ import axios from 'axios';
 import Masonry from 'react-masonry-component';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { config } from '../../asset/apikey';
+import Modal from '../common/Modal';
+
 function Gallery() {
+	const modal = useRef(null);
+	const [index, setIndex] = useState(0);
 	const [loader, setLoader] = useState(true);
 	const [items, setItems] = useState([]);
 	const userId = config.flickrUserId;
@@ -114,65 +118,79 @@ function Gallery() {
 	}, [getFlickr, userId]);
 
 	return (
-		<Layout name={'Gallery'}>
-			<div className='btnSet' ref={btnSet}>
-				<button onClick={showInterest}>Interest Gallery</button>
-				<button className='on' onClick={showMine}>
-					My Gallery
-				</button>
-			</div>
+		<>
+			<Layout name={'Gallery'}>
+				<div className='btnSet' ref={btnSet}>
+					<button onClick={showInterest}>Interest Gallery</button>
+					<button className='on' onClick={showMine}>
+						My Gallery
+					</button>
+				</div>
 
-			<div className='searchBox'>
-				<input
-					type='text'
-					id='search'
-					placeholder='검색어 입력'
-					ref={searchInput}
-					onKeyPress={(e) => e.key === 'Enter' && showSearch(e)}
-				/>
-				<button className='searchBtn' onClick={showSearch}>
-					Seach
-				</button>
-			</div>
-			<div className='frame' ref={frame}>
-				<Masonry elementType={'div'} options={{ transitionDuration: '0.5s' }}>
-					{items?.map((item, idx) => {
-						return (
-							<article key={idx}>
-								<div className='picture'>
-									<img
-										src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
-										alt={item.title}
-									/>
-								</div>
-								<p>{item.title}</p>
-								<div className='profile'>
-									<img
-										src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
-										alt={item.owner}
-										onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')}
-									/>
-									<span
-										onClick={(e) => {
-											console.log(e.target.innerText);
-											if (isSameUser.current) return;
-											isSameUser.current = true;
-											setLoader(true);
-											frame.current.classList.remove('on');
-											getFlickr({ type: 'user', user: e.target.innerText });
+				<div className='searchBox'>
+					<input
+						type='text'
+						id='search'
+						placeholder='검색어 입력'
+						ref={searchInput}
+						onKeyPress={(e) => e.key === 'Enter' && showSearch(e)}
+					/>
+					<button className='searchBtn' onClick={showSearch}>
+						Seach
+					</button>
+				</div>
+				<div className='frame' ref={frame}>
+					<Masonry elementType={'div'} options={{ transitionDuration: '0.5s' }}>
+						{items?.map((item, idx) => {
+							return (
+								<article key={idx}>
+									<div
+										className='picture'
+										onClick={() => {
+											modal.current.open();
+											setIndex(idx);
 										}}
 									>
-										{item.owner}
-									</span>
-								</div>
-							</article>
-						);
-					})}
-				</Masonry>
-			</div>
+										<img
+											src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
+											alt={item.title}
+										/>
+									</div>
+									<p>{item.title}</p>
+									<div className='profile'>
+										<img
+											src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
+											alt={item.owner}
+											onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')}
+										/>
+										<span
+											onClick={(e) => {
+												console.log(e.target.innerText);
+												if (isSameUser.current) return;
+												isSameUser.current = true;
+												setLoader(true);
+												frame.current.classList.remove('on');
+												getFlickr({ type: 'user', user: e.target.innerText });
+											}}
+										>
+											{item.owner}
+										</span>
+									</div>
+								</article>
+							);
+						})}
+					</Masonry>
+				</div>
 
-			{loader && <img src={`${process.env.PUBLIC_URL}/imgs/bono.gif`} alt='loading' className='loading' />}
-		</Layout>
+				{loader && <img src={`${process.env.PUBLIC_URL}/imgs/bono.gif`} alt='loading' className='loading' />}
+			</Layout>
+			<Modal ref={modal}>
+				<img
+					src={`https://live.staticflickr.com/${items[index]?.server}/${items[index]?.id}_${items[index]?.secret}_b.jpg`}
+					alt={items[index]?.title}
+				/>
+			</Modal>
+		</>
 	);
 }
 
