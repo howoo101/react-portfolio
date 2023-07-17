@@ -5,29 +5,43 @@
 	overflow: hidden;
 	position: relative;
 
+	button {
+		border: none;
+		background: transparent;
+		border: 1px solid #777;
+		padding: 5px 15px;
+		margin-right: 20px;
+		cursor: pointer;
+		transition: 0.5s;
+
+		&.on {
+			background: #555;
+			color: #fff;
+		}
+	}
+
 	.searchBox {
 		width: 100%;
-		padding: 50px 10px 20px;
+		padding: 20px 10px;
 		font-size: 0;
 
 		input {
 			width: 260px;
-			height: 30px;
+			height: 35px;
 			background: #fff;
 			border: 1px solid #ddd;
 			padding-left: 10px;
 		}
 		.searchBtn {
 			width: 80px;
-			height: 29px;
+			height: 35px;
 			background: #333;
 			color: #fff;
-			font: bold 12px/29px 'arial';
+			font: bold 12px 'arial';
 			text-align: center;
 			border: none;
 			cursor: pointer;
 			margin-left: 5px;
-			transform: translateY(-1px);
 		}
 	}
 
