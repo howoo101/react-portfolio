@@ -7,6 +7,7 @@ function Gallery() {
 	const [loader, setLoader] = useState(true);
 	const [items, setItems] = useState([]);
 	const userId = config.flickrUserId;
+	const isSameUser = useRef(true);
 
 	const searchInput = useRef(null);
 	const btnSet = useRef(null);
@@ -54,7 +55,7 @@ function Gallery() {
 				img.onload = () => {
 					++counter;
 
-					if (counter === imgs.length) {
+					if (counter === imgs.length - 2) {
 						setLoader(false);
 						frame.current.classList.add('on');
 						enableEvent.current = true;
@@ -73,6 +74,7 @@ function Gallery() {
 		resetGallery(e);
 		getFlickr({ type: 'search', tags: tag });
 		searchInput.current.value = '';
+		isSameUser.current = false;
 	};
 
 	const showInterest = (e) => {
@@ -83,6 +85,7 @@ function Gallery() {
 		resetGallery(e);
 		//새로운 데이터로 갤러리 생성 함수 호출
 		getFlickr({ type: 'interest' });
+		isSameUser.current = false;
 	};
 
 	const showMine = (e) => {
@@ -103,6 +106,7 @@ function Gallery() {
 		enableEvent.current = false;
 		setLoader(true);
 		frame.current.classList.remove('on');
+		isSameUser.current = false;
 	};
 
 	useEffect(() => {
@@ -148,7 +152,18 @@ function Gallery() {
 										alt={item.owner}
 										onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')}
 									/>
-									<span>{item.owner}</span>
+									<span
+										onClick={(e) => {
+											console.log(e.target.innerText);
+											if (isSameUser.current) return;
+											isSameUser.current = true;
+											setLoader(true);
+											frame.current.classList.remove('on');
+											getFlickr({ type: 'user', user: e.target.innerText });
+										}}
+									>
+										{item.owner}
+									</span>
 								</div>
 							</article>
 						);
