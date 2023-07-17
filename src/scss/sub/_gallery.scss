@@ -36,25 +36,17 @@
 		top: 50%;
 		left: 50%;
 		transform: translateX(-50%, -50%);
-		opacity: 1;
-		transition: opacity 1s;
-		z-index: 3;
-
-		&.off {
-			opacity: 0;
-			z-index: -1;
-		}
 	}
 
 	.frame {
-		// opacity: 0;
-		// transform: translateY(100px);
-		// transition: 1s;
+		opacity: 0;
+		transform: translateY(100px);
+		transition: 1s;
 
-		// &.on {
-		// 	opacity: 1;
-		// 	transform: translateY(0px);
-		// }
+		&.on {
+			opacity: 1;
+			transform: translateY(0px);
+		}
 		&::after {
 			content: '';
 			display: block;

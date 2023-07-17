@@ -1,12 +1,15 @@
 import Layout from '../common/Layout';
 import axios from 'axios';
 import Masonry from 'react-masonry-component';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { config } from '../../asset/apikey';
 function Gallery() {
-	const [loader, setLoader] = useState(false);
+	const [loader, setLoader] = useState(true);
 	const [items, setItems] = useState([]);
 	const userId = config.flickrUserId;
+
+	const frame = useRef(null);
+	const counter = useRef(0);
 
 	const getFlickr = useCallback(async (opt) => {
 		const baseURL = 'https://www.flickr.com/services/rest/?format=json&nojsoncallback=1';
@@ -26,11 +29,27 @@ function Gallery() {
 		const result = await axios.get(url);
 
 		setItems(result.data.photos.photo);
+		//외부데이터가 State에 담기고 DOM이 생성되는 순간
+		//모든 img요소를 찾아서 반복처리
+		const imgs = frame.current.querySelectorAll('img');
+
+		counter.current = 0;
+		console.log(imgs);
+		imgs.forEach((img) => {
+			img.onload = () => {
+				++counter.current;
+
+				if (counter.current === imgs.length) {
+					setLoader(false);
+					frame.current.classList.add('on');
+				}
+			};
+		});
 	}, []);
 
 	useEffect(() => {
-		getFlickr({ type: 'user', user: userId });
-	}, [getFlickr, userId]);
+		getFlickr({ type: 'interest' });
+	}, [getFlickr]);
 
 	return (
 		<Layout name={'Gallery'}>
@@ -38,7 +57,7 @@ function Gallery() {
 				<input type='text' id='search' placeholder='검색어 입력' />
 				<button className='searchBtn'>Search</button>
 			</div>
-			<div className='frame'>
+			<div className='frame' ref={frame}>
 				<Masonry elementType={'div'} options={{ transitionDuration: '0.5s' }}>
 					{items?.map((item, idx) => {
 						return (
