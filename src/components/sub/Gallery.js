@@ -1,5 +1,6 @@
 import Layout from '../common/Layout';
 import axios from 'axios';
+import Masonry from 'react-masonry-component';
 import { useCallback, useEffect, useState } from 'react';
 import { config } from '../../asset/apikey';
 function Gallery() {
@@ -16,8 +17,7 @@ function Gallery() {
 		const num = 40;
 		let url = '';
 
-		if (opt.type === 'interest')
-			url = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
+		if (opt.type === 'interest') url = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
 		if (opt.type === 'search')
 			url = `${baseURL}&api_key=${key}&method=${method_search}&per_page=${num}&tags=${opt.tags}`;
 		if (opt.type === 'user')
@@ -39,41 +39,32 @@ function Gallery() {
 				<button className='searchBtn'>Search</button>
 			</div>
 			<div className='frame'>
-				{items?.map((item, idx) => {
-					return (
-						<article key={idx}>
-							<div className='picture'>
-								<img
-									src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
-									alt={item.title}
-								/>
-							</div>
-							<p>{item.title}</p>
-							<div className='profile'>
-								<img
-									src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
-									alt={item.owner}
-									onError={(e) =>
-										e.target.setAttribute(
-											'src',
-											'https://www.flickr.com/images/buddyicon.gif'
-										)
-									}
-								/>
-								<span>{item.owner}</span>
-							</div>
-						</article>
-					);
-				})}
+				<Masonry elementType={'div'} options={{ transitionDuration: '0.5s' }}>
+					{items?.map((item, idx) => {
+						return (
+							<article key={idx}>
+								<div className='picture'>
+									<img
+										src={`https://live.staticflickr.com/${item.server}/${item.id}_${item.secret}_m.jpg`}
+										alt={item.title}
+									/>
+								</div>
+								<p>{item.title}</p>
+								<div className='profile'>
+									<img
+										src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
+										alt={item.owner}
+										onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')}
+									/>
+									<span>{item.owner}</span>
+								</div>
+							</article>
+						);
+					})}
+				</Masonry>
 			</div>
 
-			{loader && (
-				<img
-					src={`${process.env.PUBLIC_URL}/imgs/bono.gif`}
-					alt='loading'
-					className='loading'
-				/>
-			)}
+			{loader && <img src={`${process.env.PUBLIC_URL}/imgs/bono.gif`} alt='loading' className='loading' />}
 		</Layout>
 	);
 }
