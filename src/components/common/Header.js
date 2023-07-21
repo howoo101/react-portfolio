@@ -1,13 +1,12 @@
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import { useRef } from 'react';
+
 import Menu from './Menu';
 
-function Header({ type }) {
+function Header({ type, menu }) {
 	const active = 'on';
 
-	const toggleMenu = useRef(null);
 	return (
 		<>
 			<header id='header' className={type}>
@@ -62,12 +61,12 @@ function Header({ type }) {
 						className='btnCall'
 						icon={faBars}
 						onClick={() => {
-							toggleMenu.current.toggle();
+							menu.current.toggle();
 						}}
 					/>
 				</div>
 			</header>
-			<Menu ref={toggleMenu} />
+			<Menu ref={menu} />
 		</>
 	);
 }

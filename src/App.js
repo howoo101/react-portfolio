@@ -13,15 +13,18 @@ import Youtube from './components/sub/Youtube';
 import Contact from './components/sub/Contact';
 import Community from './components/sub/Community';
 import Signup from './components/sub/Signup';
+import { useRef } from 'react';
+import Menu from './components/common/Menu';
 
 function App() {
+	const menu = useRef(null);
+
 	return (
 		<>
 			<Switch>
-				<Route exact path='/' component={Main} />
+				<Route exact path='/' render={() => <Main menu={menu} />} />
 
-				<Route path='/' render={() => <Header type={'sub'} />} />
-				{/* 서브전용 라우터에는 sub문자값을 전달 */}
+				<Route path='/' render={() => <Header type={'sub'} menu={menu} />} />
 			</Switch>
 
 			<Route path='/department' component={Department} />
@@ -31,6 +34,7 @@ function App() {
 			<Route path='/community' component={Community} />
 			<Route path='/signup' component={Signup} />
 			<Footer />
+			<Menu ref={menu} />
 		</>
 	);
 }
