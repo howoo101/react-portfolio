@@ -7,7 +7,7 @@ function Department() {
 
 	async function getData() {
 		const json = (await axios.get(`${process.env.PUBLIC_URL}/DB/department.json`)).data.members;
-		console.log(json);
+		// console.log(json);
 		setMembers(json);
 	}
 
