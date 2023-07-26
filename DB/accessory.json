@@ -1,0 +1,49 @@
+{
+  "items": [
+    {
+      "category": "가방",
+      "data": [
+        {
+          "title": "가방1",
+          "price": 11.11,
+          "img": "bag1"
+        },
+        {
+          "title": "가방2",
+          "price": 11.11,
+          "img": "bag2"
+        }
+      ]
+    },
+    {
+      "category": "의류",
+      "data": [
+        {
+          "title": "옷1",
+          "price": 22.22,
+          "img": "cloth1"
+        },
+        {
+          "title": "옷2",
+          "price": 22.22,
+          "img": "cloth2"
+        }
+      ]
+    },
+    {
+      "category": "신발",
+      "data": [
+        {
+          "title": "신발1",
+          "price": 33.33,
+          "img": "shoes1"
+        },
+        {
+          "title": "신발2",
+          "price": 33.33,
+          "img": "shoes2"
+        }
+      ]
+    }
+  ]
+}
