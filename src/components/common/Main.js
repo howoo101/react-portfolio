@@ -29,8 +29,8 @@ function Main({ menu }) {
 		};
 	}, [activeHeader]);
 	return (
-		<main>
-			<Header forwardRef={} type={'main'} menu={menu} />
+		<main ref={mainRef}>
+			<Header type={'main'} menu={menu} />
 			<Visual />
 			<Choice />
 			<Diary />
