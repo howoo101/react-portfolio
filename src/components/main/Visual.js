@@ -2,7 +2,7 @@ import React from 'react';
 
 function Visual() {
 	return (
-		<figure id='visual'>
+		<figure id='visual' className='naviScroll'>
 			<section className='lower'>
 				<h2>The great outdoors</h2>
 				<p>travel with pleasure</p>

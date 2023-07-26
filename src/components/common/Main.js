@@ -7,6 +7,8 @@ import Accessory from '../main/Accessory';
 import Scrolls from './Scrolls';
 
 function Main({ menu }) {
+	const [scrolled, setScrolled] = useState(0);
+	const [pos, setPos] = useState([]);
 	const mainRef = useRef(null);
 
 	const activeHeader = useCallback(() => {
@@ -22,14 +24,18 @@ function Main({ menu }) {
 
 	useEffect(() => {
 		window.addEventListener('scroll', activeHeader);
-	});
+		return () => {
+			window.removeEventListener('scroll', activeHeader);
+		};
+	}, [activeHeader]);
 	return (
-		<main ref={mainRef}>
-			<Header type={'main'} menu={menu} />
+		<main>
+			<Header forwardRef={} type={'main'} menu={menu} />
 			<Visual />
 			<Choice />
 			<Diary />
 			<Accessory />
+			<Scrolls setScrolled={setScrolled} setPos={setPos} />
 		</main>
 	);
 }
