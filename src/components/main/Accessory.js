@@ -1,6 +1,6 @@
 import { faPlus, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import axios from 'axios';
 
 function Accessory() {
@@ -85,4 +85,4 @@ function Accessory() {
 	);
 }
 
-export default Accessory;
+export default memo(Accessory);

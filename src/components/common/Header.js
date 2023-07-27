@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 import Menu from './Menu';
+import { memo } from 'react';
 
 function Header({ type, menu }) {
 	const active = 'on';
@@ -71,4 +72,4 @@ function Header({ type, menu }) {
 	);
 }
 
-export default Header;
+export default memo(Header);

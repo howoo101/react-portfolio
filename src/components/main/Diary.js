@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { memo, useRef } from 'react';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper';
 import 'swiper/css';
@@ -120,4 +120,4 @@ function Diary() {
 	);
 }
 
-export default Diary;
+export default memo(Diary);

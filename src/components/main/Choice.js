@@ -1,5 +1,6 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { memo } from 'react';
 
 function Choice() {
 	return (
@@ -37,4 +38,4 @@ function Choice() {
 	);
 }
 
-export default Choice;
+export default memo(Choice);
