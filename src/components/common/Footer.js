@@ -1,6 +1,11 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 function Footer() {
+	const president = useSelector((store) =>
+		store.memberReducer.find((member) => member.position === 'President')
+	);
+
 	return (
 		<footer>
 			<div className='inner clearfix'>
@@ -25,6 +30,9 @@ function Footer() {
 					</li>
 				</ul>
 			</div>
+			<p>
+				This Institute was established by <strong>{president.name}</strong> in 1995
+			</p>
 		</footer>
 	);
 }
