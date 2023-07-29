@@ -26,7 +26,7 @@ const memberReducer = (state = initMember, action) => {
 	}
 };
 
-const youtubeReducer = (state = { youtuebe: initYoutube }, action) => {
+const youtubeReducer = (state = { youtube: initYoutube }, action) => {
 	switch (action.type) {
 		case SET_YOUTUBE:
 			return { ...state, youtube: action.payload };
