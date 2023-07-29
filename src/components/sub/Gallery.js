@@ -28,7 +28,8 @@ function Gallery() {
 			const num = 40;
 			let url = '';
 
-			if (opt.type === 'interest') url = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
+			if (opt.type === 'interest')
+				url = `${baseURL}&api_key=${key}&method=${method_interest}&per_page=${num}`;
 			if (opt.type === 'search')
 				url = `${baseURL}&api_key=${key}&method=${method_search}&per_page=${num}&tags=${opt.tags}`;
 			if (opt.type === 'user')
@@ -54,6 +55,7 @@ function Gallery() {
 			const imgs = frame.current.querySelectorAll('img');
 
 			let counter = 0;
+			if (!imgs) return;
 
 			imgs.forEach((img) => {
 				img.onload = () => {
@@ -161,7 +163,12 @@ function Gallery() {
 										<img
 											src={`http://farm${item.farm}.staticflickr.com/${item.server}/buddyicons/${item.owner}.jpg`}
 											alt={item.owner}
-											onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')}
+											onError={(e) =>
+												e.target.setAttribute(
+													'src',
+													'https://www.flickr.com/images/buddyicon.gif'
+												)
+											}
 										/>
 										<span
 											onClick={(e) => {
@@ -170,7 +177,10 @@ function Gallery() {
 												isSameUser.current = true;
 												setLoader(true);
 												frame.current.classList.remove('on');
-												getFlickr({ type: 'user', user: e.target.innerText });
+												getFlickr({
+													type: 'user',
+													user: e.target.innerText,
+												});
 											}}
 										>
 											{item.owner}
@@ -182,7 +192,13 @@ function Gallery() {
 					</Masonry>
 				</div>
 
-				{loader && <img src={`${process.env.PUBLIC_URL}/imgs/bono.gif`} alt='loading' className='loading' />}
+				{loader && (
+					<img
+						src={`${process.env.PUBLIC_URL}/imgs/bono.gif`}
+						alt='loading'
+						className='loading'
+					/>
+				)}
 			</Layout>
 			<Modal ref={modal}>
 				<img
