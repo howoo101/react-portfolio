@@ -1,19 +1,10 @@
-import { useEffect, useState } from 'react';
 import Layout from '../common/Layout';
-import axios from 'axios';
+
+import { useSelector } from 'react-redux';
 
 function Department() {
-	const [members, setMembers] = useState([]);
+	const members = useSelector((store) => store.memberReducer);
 
-	async function getData() {
-		const json = (await axios.get(`${process.env.PUBLIC_URL}/DB/department.json`)).data.members;
-		// console.log(json);
-		setMembers(json);
-	}
-
-	useEffect(() => {
-		getData();
-	}, []);
 	return (
 		<Layout name={'Department'}>
 			<div className='wrap'>

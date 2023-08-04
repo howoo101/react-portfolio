@@ -24,9 +24,7 @@ function Main({ menu }) {
 
 	useEffect(() => {
 		window.addEventListener('scroll', activeHeader);
-		return () => {
-			window.removeEventListener('scroll', activeHeader);
-		};
+		return () => window.removeEventListener('scroll', activeHeader);
 	}, [activeHeader]);
 	return (
 		<main ref={mainRef}>
