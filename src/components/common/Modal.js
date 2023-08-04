@@ -2,9 +2,18 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 
 const Modal = forwardRef((props, ref) => {
 	const [open, setOpen] = useState(false);
-
+	const keyboardEvent = () => {
+		window.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') setOpen(false);
+		});
+	};
 	useImperativeHandle(ref, () => {
-		return { open: () => setOpen(true) };
+		return {
+			open: () => {
+				keyboardEvent();
+				setOpen(true);
+			},
+		};
 	});
 
 	useEffect(() => {
